@@ -39,7 +39,7 @@ public class RestauranteController {
 
 	@GetMapping//(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public List<Restaurante> listar() {
-		return restauranteRepository.findAll();
+		return restauranteRepository.findAll();	
 	}
 
 	@GetMapping("/{restauranteId}")
