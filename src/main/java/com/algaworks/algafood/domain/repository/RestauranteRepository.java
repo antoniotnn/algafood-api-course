@@ -16,7 +16,8 @@ public interface RestauranteRepository
 	extends CustomJpaRepository<Restaurante, Long>, RestauranteRespositoryQueries,
 	JpaSpecificationExecutor<Restaurante> {
 	
-	@Query("from Restaurante r join fetch r.cozinha join fetch r.formasPagamento")
+//	@Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento")
+	@Query("from Restaurante r join fetch r.cozinha")
 	List<Restaurante> findAll();
 	
 	/* se um restaurante não tiver nenhuma forma de pagamento associada a ele, esse restaurante não será
