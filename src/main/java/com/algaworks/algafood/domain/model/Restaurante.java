@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -60,6 +61,8 @@ public class Restaurante {
 //	@JoinColumn(name = "cozinha_id")  /* linha opcional , se quiser mudar nome so especificar */
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
+	@NotNull
+	@Valid
 	private Cozinha cozinha;
 	
 	@JsonIgnore
