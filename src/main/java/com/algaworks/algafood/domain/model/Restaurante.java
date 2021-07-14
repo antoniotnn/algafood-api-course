@@ -36,6 +36,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Restaurante {
 	
+	// https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-builtin-constraints
+	// Referência validações Bean validation / hibernate
+	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
