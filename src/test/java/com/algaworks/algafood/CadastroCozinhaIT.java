@@ -1,6 +1,5 @@
 package com.algaworks.algafood;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.util.DatabaseCleaner;
+import com.algaworks.algafood.util.ResourceUtils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -24,11 +24,14 @@ import io.restassured.http.ContentType;
 @TestPropertySource("/application-test.properties")
 class CadastroCozinhaIT {
 	
+//	@Autowired
+//	private Flyway flyway;
+	
+	private static final int COZINHA_ID_INEXISTENTE = 100;
+	
 	@LocalServerPort
 	private int port;
 	
-//	@Autowired
-//	private Flyway flyway;
 	
 	@Autowired
 	private DatabaseCleaner databaseCleaner;
@@ -36,12 +39,18 @@ class CadastroCozinhaIT {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
+	private Cozinha cozinhaAmericana;
+	private int quantidadeCozinhasCadastradas;
+	private String jsonCorretoCozinhaChinesa;
+	
 	@BeforeEach
 	public void setUp() {
 		
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.port = port;
 		RestAssured.basePath = "/cozinhas";
+		
+		jsonCorretoCozinhaChinesa = ResourceUtils.getContentFromResource("/json/correto/cozinha-chinesa.json");
 		
 		databaseCleaner.clearTables();
 		prepararDados();
@@ -60,13 +69,13 @@ class CadastroCozinhaIT {
 	}
 	
 	@Test
-	public void deveConter2Cozinhas_QuandoConsultarCozinnhas() {
+	public void deveRetornarQuantidadeCorretaDeCozinhas_QuandoConsultarCozinnhas() {
 		RestAssured.given()  
 			.accept(ContentType.JSON)
 		.when()
 			.get()
 		.then()
-			.body("", Matchers.hasSize(2));
+			.body("", Matchers.hasSize(quantidadeCozinhasCadastradas));
 //			.body("nome", Matchers.hasItems("Indiana", "Tailandesa"));
 		
 	}
@@ -74,7 +83,7 @@ class CadastroCozinhaIT {
 	@Test
 	public void deveRetornarStatus201_QuandoCadastrarCozinha() {
 		RestAssured.given()
-			.body("{ \"nome\": \"Chinesa\" }")
+			.body(jsonCorretoCozinhaChinesa)
 			.contentType(ContentType.JSON)
 			.accept(ContentType.JSON)
 		.when()
@@ -87,19 +96,19 @@ class CadastroCozinhaIT {
 	@Test
 	public void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente() {
 		RestAssured.given() 
-			.pathParam("cozinhaId", 2)
+			.pathParam("cozinhaId", cozinhaAmericana.getId())
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{cozinhaId}")
 		.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("nome", Matchers.equalTo("Americana"));
+			.body("nome", Matchers.equalTo(cozinhaAmericana.getNome()));
 	}
 	
 	@Test
 	public void deveRetornarStatus404_QuandoConsultarCozinhaInexistente() {
 		RestAssured.given() 
-			.pathParam("cozinhaId", 100)
+			.pathParam("cozinhaId", COZINHA_ID_INEXISTENTE)
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{cozinhaId}")
@@ -109,13 +118,15 @@ class CadastroCozinhaIT {
 	
 	
 	private void prepararDados() {
-		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setNome("Tailandesa");
-		cozinhaRepository.save(cozinha1);
+		Cozinha cozinhaTailandesa = new Cozinha();
+		cozinhaTailandesa.setNome("Tailandesa");
+		cozinhaRepository.save(cozinhaTailandesa);
 		
-		Cozinha cozinha2 = new Cozinha();
-		cozinha2.setNome("Americana");
-		cozinhaRepository.save(cozinha2);
+		cozinhaAmericana = new Cozinha();
+		cozinhaAmericana.setNome("Americana");
+		cozinhaRepository.save(cozinhaAmericana);
+		
+		quantidadeCozinhasCadastradas = (int) cozinhaRepository.count();
 	}
 
 
