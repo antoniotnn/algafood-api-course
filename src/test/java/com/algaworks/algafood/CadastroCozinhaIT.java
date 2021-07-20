@@ -1,6 +1,8 @@
 package com.algaworks.algafood;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,5 +34,22 @@ class CadastroCozinhaIT {
 		.then()
 			.statusCode(HttpStatus.OK.value());
 	}
+	
+	@Test
+	public void deveConter4Cozinhas_QuandoConsultarCozinnhas() {
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+		
+		given()  //RestAssured.given()
+			.basePath("/cozinhas")
+			.port(port)
+			.accept(ContentType.JSON)
+		.when()
+			.get()
+		.then()
+			.body("", hasSize(4))
+			.body("nome", hasItems("Indiana", "Tailandesa"));
+		
+	}
+
 
 }
