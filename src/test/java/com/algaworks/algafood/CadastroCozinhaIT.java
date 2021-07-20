@@ -1,9 +1,6 @@
 package com.algaworks.algafood;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
-
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +29,7 @@ class CadastroCozinhaIT {
 	
 	@Test
 	public void deveRetornarStatus200_QuandoConsultarCozinnhas() {
-		given()  //RestAssured.given()
+		RestAssured.given()  //RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
 			.get()
@@ -42,13 +39,13 @@ class CadastroCozinhaIT {
 	
 	@Test
 	public void deveConter4Cozinhas_QuandoConsultarCozinnhas() {
-		given()  //RestAssured.given()
+		RestAssured.given()  //RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
 			.get()
 		.then()
-			.body("", hasSize(4))
-			.body("nome", hasItems("Indiana", "Tailandesa"));
+			.body("", Matchers.hasSize(4))
+			.body("nome", Matchers.hasItems("Indiana", "Tailandesa"));
 		
 	}
 
