@@ -59,7 +59,7 @@ class CadastroCozinhaIT {
 	
 	
 	@Test
-	public void deveRetornarStatus200_QuandoConsultarCozinnhas() {
+	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
 		RestAssured.given()  //RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
@@ -69,7 +69,7 @@ class CadastroCozinhaIT {
 	}
 	
 	@Test
-	public void deveRetornarQuantidadeCorretaDeCozinhas_QuandoConsultarCozinnhas() {
+	public void deveRetornarQuantidadeCorretaDeCozinhas_QuandoConsultarCozinhas() {
 		RestAssured.given()  
 			.accept(ContentType.JSON)
 		.when()
