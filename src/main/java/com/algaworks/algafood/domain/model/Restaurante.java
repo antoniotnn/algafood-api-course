@@ -31,6 +31,7 @@ import com.algaworks.algafood.core.validation.Groups;
 import com.algaworks.algafood.core.validation.Multiplo;
 import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -68,6 +69,7 @@ public class Restaurante {
 //	@JsonIgnore
 //	@JsonIgnoreProperties("hibernateLazyInitializer")
 //	@JoinColumn(name = "cozinha_id")  /* linha opcional , se quiser mudar nome so especificar */
+	@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	@NotNull//(groups = Groups.CozinhaId.class)
