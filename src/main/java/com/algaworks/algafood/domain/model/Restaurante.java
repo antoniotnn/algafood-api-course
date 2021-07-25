@@ -51,15 +51,15 @@ public class Restaurante {
 	
 //	@NotNull
 //	@NotEmpty
-	@NotBlank//(message = "nome é obrigatório")//(groups = Groups.CozinhaId.class)
+//	@NotBlank//(message = "nome é obrigatório")//(groups = Groups.CozinhaId.class)
 	@Column(nullable = false)
 	private String nome;
 	
 //	@DecimalMin("0")
 //	@TaxaFrete
 //	@Multiplo(numero = 5)
-	@NotNull
-	@PositiveOrZero//(message = "{TaxaFrete.invalida}")//(groups = Groups.CozinhaId.class)
+//	@NotNull
+//	@PositiveOrZero//(message = "{TaxaFrete.invalida}")//(groups = Groups.CozinhaId.class)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 	
@@ -67,11 +67,11 @@ public class Restaurante {
 //	@JsonIgnoreProperties("hibernateLazyInitializer")
 //	@JoinColumn(name = "cozinha_id")  /* linha opcional , se quiser mudar nome so especificar */
 //	@JsonIgnoreProperties(value = "nome", allowGetters = true)
+//	@NotNull//(groups = Groups.CozinhaId.class)
+//	@Valid
+//	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
-	@NotNull//(groups = Groups.CozinhaId.class)
-	@Valid
-	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	private Cozinha cozinha;
 	
 //	@JsonIgnore
