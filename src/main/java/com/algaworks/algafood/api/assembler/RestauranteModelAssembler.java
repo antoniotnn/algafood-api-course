@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.api.model.RestauranteModel;
+import com.algaworks.algafood.api.model.input.CozinhaIdInput;
+import com.algaworks.algafood.api.model.input.RestauranteInput;
 import com.algaworks.algafood.domain.model.Restaurante;
 
 @Component
@@ -29,6 +31,22 @@ public class RestauranteModelAssembler {
 		return restaurantes.stream()
 				.map(restaurante -> toModel(restaurante))
 				.collect(Collectors.toList());
+	}
+
+	/* toInputObject implementado por mim e não pelo curso, para conseguir atender o @PatchMapping */
+	
+	public RestauranteInput toInputObject(Restaurante restaurante) {
+		RestauranteInput restauranteInput = new RestauranteInput();
+		restauranteInput.setNome(restaurante.getNome());
+		restauranteInput.setTaxaFrete(restaurante.getTaxaFrete());
+		
+		CozinhaIdInput cozinhaIdInput = new CozinhaIdInput();
+		cozinhaIdInput.setId(restaurante.getCozinha().getId());
+		
+		restauranteInput.setCozinha(cozinhaIdInput);
+		
+		return restauranteInput;
+		
 	}
 	
 }
