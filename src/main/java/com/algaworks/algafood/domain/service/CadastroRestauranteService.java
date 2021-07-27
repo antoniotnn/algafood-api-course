@@ -35,6 +35,7 @@ public class CadastroRestauranteService {
 	public void excluir(Long restauranteId) {
 		try {
 			restauranteRepository.deleteById(restauranteId);
+			restauranteRepository.flush(); //descarrega operação pendente no banco de dados
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
