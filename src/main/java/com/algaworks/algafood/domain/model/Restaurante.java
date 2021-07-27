@@ -34,62 +34,50 @@ descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Entity
 public class Restaurante {
 	
-	// https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-builtin-constraints
-	// Referência validações Bean validation / hibernate
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-//	@NotNull
-//	@NotEmpty
-//	@NotBlank//(message = "nome é obrigatório")//(groups = Groups.CozinhaId.class)
 	@Column(nullable = false)
 	private String nome;
 	
-//	@DecimalMin("0")
-//	@TaxaFrete
-//	@Multiplo(numero = 5)
-//	@NotNull
-//	@PositiveOrZero//(message = "{TaxaFrete.invalida}")//(groups = Groups.CozinhaId.class)
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 	
-//	@JsonIgnore
-//	@JsonIgnoreProperties("hibernateLazyInitializer")
-//	@JoinColumn(name = "cozinha_id")  /* linha opcional , se quiser mudar nome so especificar */
-//	@JsonIgnoreProperties(value = "nome", allowGetters = true)
-//	@NotNull//(groups = Groups.CozinhaId.class)
-//	@Valid
-//	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-	@ManyToOne //(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Cozinha cozinha;
 	
-//	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 	
-//	@JsonIgnore
+	private Boolean ativo = Boolean.TRUE;
+	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime") // datetime(6) com precisão de 6 casas de Milissegundos
 	private OffsetDateTime dataCadastro;
 	
-//	@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataAtualizacao;
 	
-//	@JsonIgnore
 	@ManyToMany //(fetch = FetchType.EAGER)
 	@JoinTable(name = "restaurante_forma_pagamento",
 		joinColumns = @JoinColumn(name = "restaurante_id"),
 		inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formasPagamento = new ArrayList<>();
 	
-//	@JsonIgnore
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
+	
+	public void ativar() {
+		setAtivo(true);
+	}
+	
+	public void inativar() {
+		setAtivo(false);
+	}
 	
 }
