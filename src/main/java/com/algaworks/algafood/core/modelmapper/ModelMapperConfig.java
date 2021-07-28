@@ -10,6 +10,7 @@ import com.algaworks.algafood.domain.model.Endereco;
 @Configuration
 public class ModelMapperConfig {
 	
+	
 	@Bean
 	public ModelMapper modelMapper() {
 		
