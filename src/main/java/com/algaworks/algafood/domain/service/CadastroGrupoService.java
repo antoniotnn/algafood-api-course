@@ -8,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.GrupoNaoEncontradoException;
-import com.algaworks.algafood.domain.model.Permissao;
 import com.algaworks.algafood.domain.model.Grupo;
-import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.model.Permissao;
 import com.algaworks.algafood.domain.repository.GrupoRepository;
 
 @Service
