@@ -64,7 +64,7 @@ public class EmissaoPedidoService {
 		pedido.setFormaPagamento(formaPagamento);
 		
 		if (restaurante.naoAceitaFormaPagamento(formaPagamento)) {
-			throw new NegocioException(String.format("Forma de pagamento '%s' não é aceita por esse restairamte.", formaPagamento.getDescricao()));
+			throw new NegocioException(String.format("Forma de pagamento '%s' não é aceita por esse restaurante.", formaPagamento.getDescricao()));
 		}
 		
 		
