@@ -28,3 +28,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>, Produto
 	Optional<FotoProduto> findFotoById(Long restauranteId, Long produtoId);
 	
 }
+		
