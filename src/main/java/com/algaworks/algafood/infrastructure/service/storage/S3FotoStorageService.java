@@ -1,14 +1,12 @@
 package com.algaworks.algafood.infrastructure.service.storage;
 
-import java.io.InputStream;
+import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.core.storage.StorageProperties;
 import com.algaworks.algafood.domain.service.FotoStorageService;
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
@@ -25,9 +23,13 @@ public class S3FotoStorageService implements FotoStorageService {
 	private StorageProperties storageProperties;
 	
 	@Override
-	public InputStream recuperar(String nomeArquivo) {
-		// TODO Auto-generated method stub
-		return null;
+	public FotoRecuperada recuperar(String nomeArquivo) {
+		String caminhoArquivo = getCaminhoArquivo(nomeArquivo);
+		
+		URL url = amazonS3.getUrl(storageProperties.getS3().getBucket(), caminhoArquivo);
+		
+		return FotoRecuperada.builder()
+				.url(url.toString()).build();
 	}
 
 	@Override
@@ -51,9 +53,6 @@ public class S3FotoStorageService implements FotoStorageService {
 		}
 	}
 
-	private String getCaminhoArquivo(String nomeArquivo) {
-		return String.format("%s/%s", storageProperties.getS3().getDiretorioFotos(), nomeArquivo);
-	}
 
 	@Override
 	public void remover(String nomeArquivo) {
@@ -69,6 +68,10 @@ public class S3FotoStorageService implements FotoStorageService {
 			throw new StorageException("Não foi possível excluir arquivo na Amazon S3", e);
 		} 
 		
+	}
+	
+	private String getCaminhoArquivo(String nomeArquivo) {
+		return String.format("%s/%s", storageProperties.getS3().getDiretorioFotos(), nomeArquivo);
 	}
 	
 }
