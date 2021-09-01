@@ -13,7 +13,6 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-@Service
 public class S3FotoStorageService implements FotoStorageService {
 	
 	@Autowired
