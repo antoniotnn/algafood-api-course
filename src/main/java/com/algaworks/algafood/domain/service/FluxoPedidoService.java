@@ -30,6 +30,7 @@ public class FluxoPedidoService {
 		Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
 		
 		pedido.cancelar();
+		pedidoRepository.save(pedido); //necessário para o disparo de eventos usando o registerEvent funcionar
 	}
 	
 	@Transactional
