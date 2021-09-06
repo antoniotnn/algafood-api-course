@@ -1,8 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
+import java.util.Map;
 import java.util.Set;
-
-import org.springframework.stereotype.Service;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +25,9 @@ public interface EnvioEmailService {
 		
 		@NonNull //lombok anotation
 		private String corpo;
+		
+		@Singular("variavel") //especificar o singular separadamente, pois o lombok não entende português
+		private Map<String, Object> variaveis;
 		
 	}
 }
