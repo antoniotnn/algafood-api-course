@@ -16,7 +16,6 @@ public class FluxoPedidoService {
 	@Autowired
 	private EnvioEmailService envioEmailService;
 	  
-	
 	@Transactional
 	public void confirmar(String codigoPedido) {
 		Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
