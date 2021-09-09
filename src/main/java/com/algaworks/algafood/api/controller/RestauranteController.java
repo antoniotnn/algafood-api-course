@@ -44,7 +44,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@CrossOrigin
+/*
+ * Definição de requisição simples, de acordo com CORS
+ * https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
+ */
+
+@CrossOrigin(maxAge = 10)
 @RestController
 @RequestMapping(value = "/restaurantes") //produces = MediaType.APPLICATION_JSON_VALUE 
 public class RestauranteController {
