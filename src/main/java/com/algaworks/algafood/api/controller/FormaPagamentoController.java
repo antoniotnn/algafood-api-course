@@ -45,15 +45,17 @@ public class FormaPagamentoController {
 
 	@GetMapping
 	public ResponseEntity<List<FormaPagamentoModel>> listar() {
+		
+		
 		List<FormaPagamentoModel> formasPagamentoModel = 
 				formaPagamentoModelAssembler.toCollectionModel(formaPagamentoRepository.findAll());	
 		
 		return ResponseEntity.ok()
 //				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))       - Se não informar nada public (abaixo) é o padrão
 //				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePrivate())
-			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
 //				.cacheControl(CacheControl.noCache())  //ao fazer cache, validação da requisição passa a ser obrigatória sempre. não quer dizer que não há cache, como se a resposta em cache fosse sempre velha ( stale)
 //				.cacheControl(CacheControl.noStore()) // resposta não cacheável, nada será armazenado.
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
 				.body(formasPagamentoModel);
 	}
 

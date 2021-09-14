@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public Filter shallowEtagHeaderFilter() {
+	public Filter shallowEtagHeaderFilter() {  // gerador de ETag 
 		return new ShallowEtagHeaderFilter();
 	}
 	
