@@ -124,6 +124,12 @@
 			<version>${spring-fox.version}</version>
 		</dependency>
 		
+		<dependency>
+        	<groupId>io.springfox</groupId>
+        	<artifactId>springfox-oas</artifactId>
+        	<version>${spring-fox.version}</version>
+    	</dependency>
+		
 	</dependencies>
 
 	<build>
