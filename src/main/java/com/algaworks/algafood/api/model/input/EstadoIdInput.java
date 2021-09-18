@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class EstadoIdInput {
 	
-	@ApiModelProperty(example = "1")
+	@ApiModelProperty(example = "1", required = true) /* Biblioteca BeanValidatorPluginsConfiguration.class importada em SpringFoxConfig não pega o required automaticamente do Bean Validator, então por isso ativamos o required aqui na anotação do Api Model Property para a documentação ficar correta */
 	@NotNull
 	private Long id;
 }
