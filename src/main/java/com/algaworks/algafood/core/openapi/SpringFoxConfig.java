@@ -2,11 +2,13 @@ package com.algaworks.algafood.core.openapi;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,6 +18,7 @@ import com.fasterxml.classmate.TypeResolver;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RepresentationBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseBuilder;
 import springfox.documentation.oas.annotations.EnableOpenApi;
@@ -39,6 +42,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	
 	@Bean
 	public Docket apiDocket() {
+		
 		
 		var typeResolver = new TypeResolver();
 		
@@ -65,6 +69,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 					new ResponseBuilder()
 						.code("500")
 						.description("Erro interno do servidor") // Internal Server Error
+						.representation(MediaType.APPLICATION_JSON)
+						.apply(builderModelProblema())
 						.build(),	
 					new ResponseBuilder()
 						.code("406") // Not Acceptable
@@ -78,6 +84,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				new ResponseBuilder()
 					.code("400")
 					.description("Requisição Inválida (erro do cliente)") // Bad Request
+					.representation(MediaType.APPLICATION_JSON)
+					.apply(builderModelProblema())
 					.build(),	
 				new ResponseBuilder()
 					.code("406") // Not Acceptable
@@ -86,10 +94,14 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				new ResponseBuilder()
 					.code("415") // Unsupported Media Type
 					.description("Requisição recusada porque o corpo está em um formato não suportado")
+					.representation(MediaType.APPLICATION_JSON)
+					.apply(builderModelProblema())
 					.build(),
 				new ResponseBuilder()
 					.code("500")
 					.description("Erro interno do servidor") // Internal Server Error
+					.representation(MediaType.APPLICATION_JSON)
+					.apply(builderModelProblema())
 					.build()
 			);
 	}
@@ -99,14 +111,30 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				new ResponseBuilder()
 					.code("400")
 					.description("Requisição Inválida (erro do cliente)") // Bad Request
+					.representation(MediaType.APPLICATION_JSON)
+					.apply(builderModelProblema())
 					.build(),
 				new ResponseBuilder()
 					.code("500")
 					.description("Erro interno do servidor") // Internal Server Error
+					.representation(MediaType.APPLICATION_JSON)
+					.apply(builderModelProblema())
 					.build()			
 				);
 	}
 	
+	private Consumer<RepresentationBuilder> builderModelProblema() {
+		return r->r.model(m->m.name("Problema")
+				.referenceModel(
+						ref->ref.key(
+								k->k.qualifiedModelName(
+										q->q.name("Problema")
+										.namespace("com.algaworks.algafood.api.exceptionhandler")
+										))));
+		
+	}
+	
+
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
@@ -120,15 +148,12 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("index.html")
-			.addResourceLocations("classpath:/META-INF/resources/");
-		
-
+			.addResourceLocations("classpath:/META-INF/resources/");	
 //		registry.addResourceHandler("/webjars/**")
 //			.addResourceLocations("classpath:/META-INF/resources/webjars/");
 //		
 //		necessário apenas para Swagger2
-		
-		
+			
 	}
 	
 }
