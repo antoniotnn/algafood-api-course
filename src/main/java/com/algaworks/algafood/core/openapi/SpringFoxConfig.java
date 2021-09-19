@@ -10,6 +10,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.algaworks.algafood.api.exceptionhandler.Problem;
+import com.fasterxml.classmate.TypeResolver;
+
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -36,6 +39,9 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	
 	@Bean
 	public Docket apiDocket() {
+		
+		var typeResolver = new TypeResolver();
+		
 		return new Docket(DocumentationType.OAS_30)
 				.select()
 					.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
@@ -45,6 +51,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				.useDefaultResponseMessages(false)
 //				.globalResponseMessage(RequestMethod.GET, globalGetResponseMessages())  - deprecated
 				.globalResponses(HttpMethod.GET, globalGetResponseMessages())
+				.globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+				.additionalModels(typeResolver.resolve(Problem.class))
 				.apiInfo(apiInfo())
 				.tags(new Tag("Cidades", "Gerencia as cidades"));
 				
@@ -62,6 +72,41 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 						.build()		
 				);
 	}
+	
+	private List<Response> globalPostPutResponseMessages() {
+		return Arrays.asList(
+				new ResponseBuilder()
+					.code("400")
+					.description("Requisição Inválida (erro do cliente)") // Bad Request
+					.build(),	
+				new ResponseBuilder()
+					.code("406") // Not Acceptable
+					.description("Recurso não possui representação que poderia ser aceita pelo consumidor")
+					.build(),
+				new ResponseBuilder()
+					.code("415") // Unsupported Media Type
+					.description("Requisição recusada porque o corpo está em um formato não suportado")
+					.build(),
+				new ResponseBuilder()
+					.code("500")
+					.description("Erro interno do servidor") // Internal Server Error
+					.build()
+			);
+	}
+	
+	private List<Response> globalDeleteResponseMessages() {
+		return Arrays.asList(
+				new ResponseBuilder()
+					.code("400")
+					.description("Requisição Inválida (erro do cliente)") // Bad Request
+					.build(),
+				new ResponseBuilder()
+					.code("500")
+					.description("Erro interno do servidor") // Internal Server Error
+					.build()			
+				);
+	}
+	
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
