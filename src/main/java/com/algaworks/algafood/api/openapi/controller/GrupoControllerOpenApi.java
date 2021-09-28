@@ -25,7 +25,7 @@ public interface GrupoControllerOpenApi {
 			@ApiResponse(responseCode = "400", description = "ID do grupo inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
 			@ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public GrupoModel buscar(@ApiParam("ID de um Grupo") Long grupoId);
+	public GrupoModel buscar(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId);
 	
 	@ApiOperation("Cadastra um grupo")
 	@ApiResponses({
@@ -38,13 +38,13 @@ public interface GrupoControllerOpenApi {
 		@ApiResponse(responseCode = "200", description = "Grupo atualizado"),
 		@ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public GrupoModel atualizar(@ApiParam("ID de um Grupo") Long grupoId, GrupoInput grupoInput);
+	public GrupoModel atualizar(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId, GrupoInput grupoInput);
 	
 	@ApiOperation("Exclui um grupo por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "204", description = "Grupo excluído"),
 		@ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public void remover(@ApiParam("ID de um Grupo") Long grupoId);
+	public void remover(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId);
 	
 }
