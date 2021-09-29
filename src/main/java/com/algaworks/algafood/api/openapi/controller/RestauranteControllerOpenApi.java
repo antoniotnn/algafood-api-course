@@ -22,11 +22,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @Api(tags = "Restaurantes")
 public interface RestauranteControllerOpenApi {
 	
-	@ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
-    @ApiImplicitParams({
-        @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",
-                name = "projecao", paramType = "query", type = "string")
-    })
+//	@ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
+//    @ApiImplicitParams({
+//        @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",
+//                name = "projecao", paramType = "query", type = "string")
+//    })
     @JsonView(RestauranteView.Resumo.class)
     List<RestauranteModel> listar();
     

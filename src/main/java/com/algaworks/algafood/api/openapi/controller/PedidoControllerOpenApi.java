@@ -22,9 +22,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @Api(tags = "Pedidos")
 public interface PedidoControllerOpenApi {
 	
+//	@ApiImplicitParams({
+//		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
+//				name = "campos", paramType = "query", type = "string")
+//	})
 	@ApiImplicitParams({
-		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
-				name = "campos", paramType = "query", type = "string")
+		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula", name = "campos", dataTypeClass = String.class, paramType = "query")
 	})
 	@ApiOperation("Pesquisa os pedidos")
 	Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,Pageable pageable);
@@ -37,7 +40,7 @@ public interface PedidoControllerOpenApi {
 	
 	@ApiImplicitParams({
 		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
-				name = "campos", paramType = "query", type = "string")
+				name = "campos", paramType = "query", dataTypeClass = String.class)
 	})
 	@ApiOperation("Busca um pedido por código")
 	@ApiResponses({
