@@ -18,33 +18,33 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public interface CidadeControllerOpenApi {
 	
 	@ApiOperation("Lista as cidades")
-	public List<CidadeModel> listar();
+	List<CidadeModel> listar();
 	
 	@ApiOperation("Busca uma cidade por ID")
 	@ApiResponses({
 			@ApiResponse(responseCode = "400", description = "ID da cidade inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
 			@ApiResponse(responseCode = "404", description = "Cidade não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public CidadeModel buscar(@ApiParam(value = "ID de uma cidade", required = true) Long cidadeId);
+	CidadeModel buscar(@ApiParam(value = "ID de uma cidade", required = true) Long cidadeId);
 	
 	@ApiOperation("Cadastra uma cidade")
 	@ApiResponses({
 		@ApiResponse(responseCode = "201", description = "Cidade cadastrada")	
 	})
-	public CidadeModel adicionar(CidadeInput cidadeInput);
+	CidadeModel adicionar(CidadeInput cidadeInput);
 	
 	@ApiOperation("Atualiza uma cidade por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Cidade atualizada"),
 		@ApiResponse(responseCode = "404", description = "Cidade não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public CidadeModel atualizar(@ApiParam(value = "ID de uma cidade", required = true) Long cidadeId, CidadeInput cidadeInput);
+	CidadeModel atualizar(@ApiParam(value = "ID de uma cidade", required = true) Long cidadeId, CidadeInput cidadeInput);
 	
 	@ApiOperation("Exclui uma cidade por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "204", description = "Cidade excluída"),
 		@ApiResponse(responseCode = "404", description = "Cidade não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public void remover(@ApiParam(value = "ID de uma cidade", required = true) Long cidadeId);
+	void remover(@ApiParam(value = "ID de uma cidade", required = true) Long cidadeId);
 	
 }

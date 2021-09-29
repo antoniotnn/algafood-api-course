@@ -19,33 +19,33 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public interface CozinhaControllerOpenApi {
 	
 	@ApiOperation("Lista as cozinhas com paginação")
-	public Page<CozinhaModel> listar(Pageable pageable);
+	Page<CozinhaModel> listar(Pageable pageable);
 	
 	@ApiOperation("Busca uma cozinha por ID")
 	@ApiResponses({
 			@ApiResponse(responseCode = "400", description = "ID da cozinha inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
 			@ApiResponse(responseCode = "404", description = "Cozinha não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public CozinhaModel buscar(@ApiParam(value = "ID de uma cozinha", required = true) Long cozinhaId);
+	CozinhaModel buscar(@ApiParam(value = "ID de uma cozinha", required = true) Long cozinhaId);
 	
 	@ApiOperation("Cadastra uma cozinha")
 	@ApiResponses({
 		@ApiResponse(responseCode = "201", description = "Cozinha cadastrada")	
 	})
-	public CozinhaModel adicionar(CozinhaInput cozinhaInput);
+	CozinhaModel adicionar(CozinhaInput cozinhaInput);
 	
 	@ApiOperation("Atualiza uma cozinha por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Cozinha atualizada"),
 		@ApiResponse(responseCode = "404", description = "Cozinha não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public CozinhaModel atualizar(@ApiParam(value = "ID de uma cozinha", required = true) Long cozinhaId, CozinhaInput cozinhaInput);
+	CozinhaModel atualizar(@ApiParam(value = "ID de uma cozinha", required = true) Long cozinhaId, CozinhaInput cozinhaInput);
 	
 	@ApiOperation("Exclui uma cozinha por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "204", description = "Cozinha excluída"),
 		@ApiResponse(responseCode = "404", description = "Cozinha não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public void remover(@ApiParam(value = "ID de uma cozinha", required = true) Long cozinhaId);
+	void remover(@ApiParam(value = "ID de uma cozinha", required = true) Long cozinhaId);
 	
 }

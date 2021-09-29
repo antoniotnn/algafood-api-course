@@ -18,33 +18,33 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public interface GrupoControllerOpenApi {
 	
 	@ApiOperation("Lista os grupos")
-	public List<GrupoModel> listar();
+	List<GrupoModel> listar();
 	
 	@ApiOperation("Busca um grupo por ID")
 	@ApiResponses({
 			@ApiResponse(responseCode = "400", description = "ID do grupo inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
 			@ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public GrupoModel buscar(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId);
+	GrupoModel buscar(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId);
 	
 	@ApiOperation("Cadastra um grupo")
 	@ApiResponses({
 		@ApiResponse(responseCode = "201", description = "Grupo cadastrado")	
 	})
-	public GrupoModel adicionar(GrupoInput grupoInput);
+	GrupoModel adicionar(GrupoInput grupoInput);
 	
 	@ApiOperation("Atualiza um grupo por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Grupo atualizado"),
 		@ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public GrupoModel atualizar(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId, GrupoInput grupoInput);
+	GrupoModel atualizar(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId, GrupoInput grupoInput);
 	
 	@ApiOperation("Exclui um grupo por ID")
 	@ApiResponses({
 		@ApiResponse(responseCode = "204", description = "Grupo excluído"),
 		@ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public void remover(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId);
+	void remover(@ApiParam(value = "ID de um Grupo", required = true) Long grupoId);
 	
 }

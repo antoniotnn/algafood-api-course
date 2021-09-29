@@ -27,13 +27,13 @@ public interface PedidoControllerOpenApi {
 				name = "campos", paramType = "query", type = "string")
 	})
 	@ApiOperation("Pesquisa os pedidos")
-	public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,Pageable pageable);
+	Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,Pageable pageable);
 	
 	@ApiOperation("Registra um pedido")
 	@ApiResponses({
 		@ApiResponse(responseCode = "201", description = "Pedido registrado")	
 	})
-	public PedidoModel adicionar(PedidoInput pedidoInput);
+	PedidoModel adicionar(PedidoInput pedidoInput);
 	
 	@ApiImplicitParams({
 		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
@@ -43,6 +43,6 @@ public interface PedidoControllerOpenApi {
 	@ApiResponses({
 			@ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	public PedidoModel buscar(@ApiParam(value = "Código de um pedido", required = true) String codigoPedido);
+	PedidoModel buscar(@ApiParam(value = "Código de um pedido", required = true) String codigoPedido);
 
 }
