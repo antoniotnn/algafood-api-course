@@ -24,9 +24,14 @@ public interface RestauranteControllerOpenApi {
 	
 //	@ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
 //    @ApiImplicitParams({
-//        @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",
+//        @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",   PARA SWAGGER 3
 //                name = "projecao", paramType = "query", type = "string")
 //    })
+	
+	@ApiOperation(value = "Lista os restaurantes", response = RestauranteBasicoModelOpenApi.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(value = "Lista restaurantes", name = "projecao", dataTypeClass = String.class, paramType = "query", allowableValues = "apenas-nome")
+	})
     @JsonView(RestauranteView.Resumo.class)
     List<RestauranteModel> listar();
     

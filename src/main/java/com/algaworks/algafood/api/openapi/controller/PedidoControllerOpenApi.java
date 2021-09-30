@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public interface PedidoControllerOpenApi {
 	
 //	@ApiImplicitParams({
-//		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
+//		@ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",    para SWAGGER 2
 //				name = "campos", paramType = "query", type = "string")
 //	})
 	@ApiImplicitParams({
