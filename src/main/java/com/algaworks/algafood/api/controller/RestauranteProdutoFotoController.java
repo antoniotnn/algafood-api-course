@@ -73,6 +73,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 		return fotoProdutoModelAssembler.toModel(fotoSalva);
 	}
 	
+	@Override
 	@GetMapping
 	public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		FotoProduto fotoProduto = catalogoFotoProdutoService.buscarOuFalhar(restauranteId, produtoId);
@@ -80,6 +81,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 		return fotoProdutoModelAssembler.toModel(fotoProduto);
 	}
 	
+	@Override
 	@GetMapping(produces = MediaType.ALL_VALUE)
 	public ResponseEntity<?> servir(@PathVariable Long restauranteId,
 			@PathVariable Long produtoId, @RequestHeader(name = "accept") String acceptHeader)
@@ -113,6 +115,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 		}	
 	}
 	
+	@Override
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluir(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
