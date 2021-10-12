@@ -9,6 +9,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controller.CidadeController;
 import com.algaworks.algafood.api.controller.EstadoController;
 import com.algaworks.algafood.api.model.CidadeModel;
@@ -20,6 +21,9 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@Autowired
+	private AlgaLinks algaLinks;
+	
 	public CidadeModelAssembler() {
 		super(CidadeController.class, CidadeModel.class);
 	}
@@ -30,17 +34,11 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
 		CidadeModel cidadeModel = createModelWithId(cidade.getId(), cidade);
 		
 		modelMapper.map(cidade, cidadeModel);
-		
-//		CidadeModel cidadeModel = modelMapper.map(cidade, CidadeModel.class);
-		
-//		cidadeModel.add(linkTo(methodOn(CidadeController.class)
-//				.buscar(cidadeModel.getId())).withSelfRel());
-		
-		cidadeModel.add(linkTo(methodOn(CidadeController.class)
-				.listar()).withRel("cidades"));
+			
+		cidadeModel.add(algaLinks.linkToCidades("cidades"));
 	
-		cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class)
-				.buscar(cidadeModel.getEstado().getId())).withSelfRel());
+		cidadeModel.getEstado().add(
+				algaLinks.linkToEstado(cidadeModel.getEstado().getId()));
 		
 		return cidadeModel;
 	}
