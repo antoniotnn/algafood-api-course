@@ -1,5 +1,7 @@
 package com.algaworks.algafood.api.openapi.controller;
 
+import org.springframework.http.ResponseEntity;
+
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 
 import io.swagger.annotations.Api;
@@ -18,20 +20,20 @@ public interface FluxoPedidoControllerOpenApi {
 			@ApiResponse(responseCode = "204", description = "Pedido confirmado com sucesso"),
 			@ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	void confirmar(@ApiParam(value = "Código do pedido", required = true) String codigoPedido);
+	ResponseEntity<Void> confirmar(@ApiParam(value = "Código do pedido", required = true) String codigoPedido);
 	
 	@ApiOperation("Cancelamento de pedido")
 	@ApiResponses({
 			@ApiResponse(responseCode = "204", description = "Pedido cancelado com sucesso"),
 			@ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	void cancelar(@ApiParam(value = "Código do pedido", required = true) String codigoPedido);
+	ResponseEntity<Void> cancelar(@ApiParam(value = "Código do pedido", required = true) String codigoPedido);
 	
 	@ApiOperation("Registrar entrega de pedido")
 	@ApiResponses({
 			@ApiResponse(responseCode = "204", description = "Entrega de pedido registrada com sucesso"),
 			@ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	void entregar(@ApiParam(value = "Código do pedido", required = true) String codigoPedido);
+	ResponseEntity<Void> entregar(@ApiParam(value = "Código do pedido", required = true) String codigoPedido);
 	
 }
