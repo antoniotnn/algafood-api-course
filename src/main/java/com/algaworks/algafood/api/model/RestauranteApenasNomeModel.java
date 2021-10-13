@@ -7,17 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-@Relation(collectionRelation = "cozinhas")
-public class CozinhaModel extends RepresentationModel<CozinhaModel>{
+@Setter
+@Relation(collectionRelation = "restaurantes")
+public class RestauranteApenasNomeModel extends RepresentationModel<RestauranteApenasNomeModel> {
 	
-//	@JsonView(RestauranteView.Resumo.class)
 	@ApiModelProperty(example = "1")
 	private Long id;
 	
-//	@JsonView(RestauranteView.Resumo.class)
-	@ApiModelProperty(example = "Brasileira")
+	@ApiModelProperty(example = "Thai Gourmet")
 	private String nome;
-	
 }
