@@ -142,6 +142,18 @@ public class AlgaLinks {
 	    return linkToRestauranteResponsaveis(restauranteId, IanaLinkRelations.SELF.value());
 	}
 	
+	public Link linkToRestauranteFormasPagamento(Long restauranteId) {
+	    return linkToRestauranteFormasPagamento(restauranteId, IanaLinkRelations.SELF.value());
+	}
+
+	public Link linkToFormasPagamento(String rel) {
+	    return linkTo(FormaPagamentoController.class).withRel(rel);
+	}
+
+	public Link linkToFormasPagamento() {
+	    return linkToFormasPagamento(IanaLinkRelations.SELF.value());
+	}   
+	
 	// Passamos null no segundo argumento, porque é indiferente para a
     // construção da URL do recurso de forma de pagamento
 	public Link linkToFormaPagamento(Long formaPagamentoId, String rel) {
