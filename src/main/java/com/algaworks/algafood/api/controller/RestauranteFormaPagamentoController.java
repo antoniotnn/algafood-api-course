@@ -34,6 +34,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@Override
 	@GetMapping
 	public CollectionModel<FormaPagamentoModel> listar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
@@ -41,7 +42,8 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 		CollectionModel<FormaPagamentoModel> formasPagamentoModel 
 			= formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
 				.removeLinks()
-				.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
+				.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId))
+				.add(algaLinks.linkToRestauranteFormaPagamentoAssociacao(restauranteId, "associar"));
 		
 		formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
 			formaPagamentoModel.add(algaLinks.linkToRestauranteFormaPagamentoDesassociacao(
@@ -52,6 +54,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 		return formasPagamentoModel;
 	}
 	
+	@Override
 	@DeleteMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> desassociar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
@@ -60,10 +63,13 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 		return ResponseEntity.noContent().build();
 	}
 	
+	@Override
 	@PutMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
+	public ResponseEntity<Void> associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
 		cadastroRestauranteService.associarFormaPagamento(restauranteId, formaPagamentoId);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 	
