@@ -1,6 +1,6 @@
 package com.algaworks.algafood.api.openapi.controller;
 
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.ProdutoModel;
@@ -22,7 +22,7 @@ public interface RestauranteProdutoControllerOpenApi {
 			@ApiResponse(responseCode = "400", description = "ID do restaurante inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
 			@ApiResponse(responseCode = "404", description = "Restaurante não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))		
 	})
-	List<ProdutoModel> listar(@ApiParam(value = "ID do restaurante", required = true) Long restauranteId, @ApiParam(value = "Indica se deve ou não incluir produtos inativos no resultado da listagem", defaultValue = "false") boolean incluirInativos);
+	CollectionModel<ProdutoModel> listar(@ApiParam(value = "ID do restaurante", required = true) Long restauranteId, @ApiParam(value = "Indica se deve ou não incluir produtos inativos no resultado da listagem", defaultValue = "false") Boolean incluirInativos);
 
 	@ApiOperation("Busca um produto de um restaurante")
 	@ApiResponses({
