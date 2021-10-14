@@ -37,7 +37,9 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 	public CollectionModel<FormaPagamentoModel> listar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 		
-		return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento());
+		return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
+				.removeLinks()
+				.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
 	}
 	
 	@DeleteMapping("/{formaPagamentoId}")
