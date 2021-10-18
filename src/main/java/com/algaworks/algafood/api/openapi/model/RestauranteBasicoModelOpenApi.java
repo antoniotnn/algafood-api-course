@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-//Classe apenas para documentação, compatível apenas com Swagger 2
 @ApiModel("RestauranteBasicoModel")
 @Getter
 @Setter
