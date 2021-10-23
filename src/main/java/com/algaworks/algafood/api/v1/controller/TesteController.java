@@ -16,7 +16,7 @@ import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 
 @RestController
-@RequestMapping("/teste")
+@RequestMapping("/v1/teste")
 public class TesteController {
 	
 	@Autowired
