@@ -72,7 +72,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	 */
 	
 	
-	@Bean
+//	@Bean
 	public Docket apiDocketV1() {
 		
 		
