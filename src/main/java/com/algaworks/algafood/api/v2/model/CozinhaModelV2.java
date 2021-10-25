@@ -9,17 +9,13 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Relation(collectionRelation = "cidades")
-public class CidadeModelV2 extends RepresentationModel<CidadeModelV2> {
+@Relation(collectionRelation = "cozinhas")
+public class CozinhaModelV2 extends RepresentationModel<CozinhaModelV2> {
 	
 	@ApiModelProperty(example = "1")
-	private Long idCidade;
+	private Long idCozinha;
 	
-	@ApiModelProperty(example = "Uberlândia")
-	private String nomeCidade;
+	@ApiModelProperty(example = "Brasileira")
+	private String nomeCozinha;
 	
-	private Long idEstado;
-	private String nomeEstado;
-	
-
 }
