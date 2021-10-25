@@ -256,8 +256,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	
 	private ApiInfo apiInfoV1() {
 		return new ApiInfoBuilder()
-				.title("Algafood Api")
-				.description("API Aberta para clientes e restaurantes")
+				.title("Algafood API (Depreciada)")
+				.description("API Aberta para clientes e restaurantes.<br><br>"
+						+ "<strong>Essa versão da API está depreciada e deixará de existir a partir de 01/01/2025. "
+						+ "Use a versão mais atual da API.</strong>")
 				.version("1")
 				.contact(new Contact("Algaworks", "https://www.algaworks/com", "contato@algaworks.com"))
 				.build();
