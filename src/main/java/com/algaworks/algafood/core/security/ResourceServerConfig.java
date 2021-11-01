@@ -24,11 +24,20 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 //			.oauth2ResourceServer().opaqueToken();  para opaqueToken
 			.oauth2ResourceServer().jwt();    // para JWT
 	}
-	
+	/*
+	  
+	  CHAVE SIMÉTRICA
+	 
 	@Bean
 	public JwtDecoder jwtDecoder() {
 		var secretKey = new SecretKeySpec("ladkfjkakflndafadjksfhkajshfjkah981y9138y918yjdashfklh19873".getBytes(), "HmacSHA256");  // se o secret for menor que 32bytes dará erro 401 em uma requisição no Resource Server. O log da aplicação não mostrará isso, somente se ativar o log por debbuging. Para evitar isso, usar uma chave com mais de 32bytes.
 		
 		return NimbusJwtDecoder.withSecretKey(secretKey).build();
 	}
+	
+	*/
+	
+	
+	
+	
 }
