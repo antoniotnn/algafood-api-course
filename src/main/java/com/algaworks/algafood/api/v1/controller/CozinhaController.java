@@ -10,6 +10,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +54,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	
 	
 	@GetMapping//(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@Override
+	@PreAuthorize(value = "isAuthenticated()")
 	public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable) {
 		
 		log.info("Consultando cozinhas com páginas de {} registros", pageable.getPageSize());
@@ -66,6 +69,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	}
 
 	@GetMapping("/{cozinhaId}")
+	@Override
+	@PreAuthorize(value = "isAuthenticated()")
 	public CozinhaModel buscar(@PathVariable Long cozinhaId) {
 		Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
 		
@@ -74,6 +79,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
+	@PreAuthorize(value = "hasAuthority('EDITAR_COZINHAS')")
 	public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
 		Cozinha cozinha = cozinhaInputDisassembler.toDomainObject(cozinhaInput);
 		cozinha = cadastroCozinhaService.salvar(cozinha);
@@ -81,6 +87,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 		return cozinhaModelAssembler.toModel(cozinha);
 	}
 	
+	@PreAuthorize(value = "hasAuthority('EDITAR_COZINHAS')")
+	@Override
 	@PutMapping(value = "/{cozinhaId}")
 	public CozinhaModel atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid CozinhaInput cozinhaInput) {
 		
@@ -95,6 +103,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	}
 	
 	@DeleteMapping("/{cozinhaId}")
+	@Override
+	@PreAuthorize(value = "hasAuthority('EDITAR_COZINHAS')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cozinhaId) {
 		cadastroCozinhaService.excluir(cozinhaId);
