@@ -28,4 +28,5 @@ public class AlgaSecurity {
 		return restauranteRepository.existsResponsavel(restauranteId, getUsuarioId());
 	}
 	
+
 }
