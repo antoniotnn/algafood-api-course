@@ -106,6 +106,7 @@ public class PedidoController implements PedidoControllerOpenApi {
 	}
 	
 	
+	@CheckSecurity.Pedidos.PodeCriar
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public PedidoModel adicionar(@RequestBody @Valid PedidoInput pedidoInput) {
