@@ -17,6 +17,7 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.v1.model.UsuarioModel;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
+import com.algaworks.algafood.core.security.AlgaSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
@@ -35,21 +36,29 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@Autowired
+	private AlgaSecurity algaSecurity;
+	
 	@Override
 	@GetMapping
-	@CheckSecurity.Restaurantes.PodeConsultar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 		
-		CollectionModel<UsuarioModel> usuariosModel = usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
-				.removeLinks()
-				.add(algaLinks.linkToRestauranteResponsaveis(restauranteId))
-				.add(algaLinks.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));
+		CollectionModel<UsuarioModel> usuariosModel = usuarioModelAssembler
+				.toCollectionModel(restaurante.getResponsaveis())
+				.removeLinks();
 		
-		usuariosModel.getContent().forEach(usuarioModel -> {   // ou .getContent().stream().forEach() se tiver algum fluxo de trabalho a ser executado antes de iterar sobre os itens da lista. Podendo chamar encandeadamente os métodos do stream antes, como .filter() .map() por exemplo
-			usuarioModel.add(algaLinks.linkToRestauranteResponsavelDesassociacao(  
-	                restauranteId, usuarioModel.getId(), "desassociar"));
-		});
+		usuariosModel.add(algaLinks.linkToRestauranteResponsaveis(restauranteId));
+		
+		if (algaSecurity.podeGerenciarCadastroRestaurantes()) {
+			usuariosModel.add(algaLinks.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));
+		
+			usuariosModel.getContent().forEach(usuarioModel -> {   // ou .getContent().stream().forEach() se tiver algum fluxo de trabalho a ser executado antes de iterar sobre os itens da lista. Podendo chamar encandeadamente os métodos do stream antes, como .filter() .map() por exemplo
+				usuarioModel.add(algaLinks.linkToRestauranteResponsavelDesassociacao(  
+		                restauranteId, usuarioModel.getId(), "desassociar"));
+			});
+		}
 		
 		return usuariosModel;
 	}
