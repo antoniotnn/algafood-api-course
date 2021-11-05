@@ -1,6 +1,7 @@
 package com.algaworks.algafood.core.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -42,6 +43,16 @@ public class AlgaSecurity {
 	public boolean usuarioAutenticadoIgual(Long usuarioId) {
 		return getUsuarioId() != null && usuarioId != null
 				&& getUsuarioId().equals(usuarioId);
+	}
+	
+	public boolean hasAuthority(String authorityName) {
+		return getAuthentication().getAuthorities().stream()
+				.anyMatch(authority -> authority.getAuthority().equals(authorityName));
+	}
+	
+	public boolean podeGerenciarPedidos(String codigoPedido) {		
+		return hasAuthority("SCOPE_WRITE") && (hasAuthority("GERENCIAR_PEDIDOS") 
+				|| gerenciaRestauranteDoPedido(codigoPedido));
 	}
 	
 }

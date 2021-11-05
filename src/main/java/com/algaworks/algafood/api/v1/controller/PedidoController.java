@@ -65,6 +65,7 @@ public class PedidoController implements PedidoControllerOpenApi {
 	@Autowired
 	private AlgaSecurity algaSecurity;
 	
+	@Override
 	@GetMapping
 	@CheckSecurity.Pedidos.PodePesquisar
 	public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
@@ -99,13 +100,16 @@ public class PedidoController implements PedidoControllerOpenApi {
 //		return pedidosWrapper;
 //	}
 	
+	@Override
 	@CheckSecurity.Pedidos.PodeBuscar
 	@GetMapping("/{codigoPedido}")
 	public PedidoModel buscar(@PathVariable String codigoPedido) {
-		return pedidoModelAssembler.toModel(emissaoPedidoService.buscarOuFalhar(codigoPedido));
+		Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
+		
+		return pedidoModelAssembler.toModel(pedido);
 	}
 	
-	
+	@Override
 	@CheckSecurity.Pedidos.PodeCriar
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
