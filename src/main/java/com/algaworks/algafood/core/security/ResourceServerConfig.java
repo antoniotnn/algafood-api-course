@@ -31,7 +31,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 //				.anyRequest().denyAll()
 ////				.anyRequest().authenticated()
 //			.and()
-			.formLogin()
+			.formLogin().loginPage("/login").permitAll()    //.permitAll()        // http://localhost:8080/oauth/authorize?response_type=code&client_id=foodanalytics&state=abc&redirect_uri=http://www.foodanalytics.local:8082
 			.and()
 			.authorizeRequests()
 				.antMatchers("/oauth/**").authenticated()
