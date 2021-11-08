@@ -1,5 +1,7 @@
 package com.algaworks.algafood.core.security.authorizationserver;
 
+import java.security.KeyPair;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 
 import javax.sql.DataSource;
@@ -22,6 +24,11 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.RSAKey;
 
 /*
  	https://gist.github.com/thiagofa/ef9a40d495016cb2581add41b5cbde1b
@@ -180,39 +187,28 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		
-//		jwtAccessTokenConverter.setSigningKey("ladkfjkakflndafadjksfhkajshfjkah981y9138y918yjdashfklh19873"); // se o secret for menor que 32bytes dará erro 401 em uma requisição no Resource Server. O log da aplicação não mostrará isso, somente se ativar o log por debbuging. Para evitar isso, usar uma chave com mais de 32bytes.
+		jwtAccessTokenConverter.setKeyPair(keyPair());
 		
-/*
-	Gerando um arquivo JKS com um par de chaves
+		return jwtAccessTokenConverter;
+	}
 	
-	keytool -genkeypair -alias algafood -keyalg RSA -keypass 123456 -keystore algafood.jks -storepass 123456 -validity 3650
+	@Bean
+	public JWKSet jwkSet() {
+		RSAKey.Builder builder = new RSAKey.Builder((RSAPublicKey) keyPair().getPublic())
+				.keyUse(KeyUse.SIGNATURE)
+				.algorithm(JWSAlgorithm.RS256)
+				.keyID("algafood-key-id");
+		
+		return new JWKSet(builder.build());
+	}
 	
-	Listando as entradas de um arquivo JKS
-	
-	keytool -list -keystore algafood.jks
-	
-	**************************************************** 
-	
-	Gerando o certificado
-	
-	keytool -export -rfc -alias algafood -keystore algafood.jks -file algafood-cert.pem
-	
-	Gerando a chave pública
-	
-	openssl x509 -pubkey -noout -in algafood-cert.pem > algafood-pkey.pem
-
- */	
+	private KeyPair keyPair() {
 		var keyStorePass = jwtKeyStoreProperties.getPassword();
 		var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
 		
 		var keyStoreKeyFactory = new KeyStoreKeyFactory(
 				jwtKeyStoreProperties.getJksLocation(), keyStorePass.toCharArray()); //abrir o arquivo JKS 
-		var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
-		
-		jwtAccessTokenConverter.setKeyPair(keyPair);
-		
-		
-		return jwtAccessTokenConverter;
+		return keyStoreKeyFactory.getKeyPair(keyPairAlias);
 	}
 	
 
