@@ -115,6 +115,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 					Code Challenge: teste123   (method plain)
 					Code Verifier: teste123
 					
+					http://api.algafood.local/oauth/authorize?response_type=code&client_id=foodanalytics&redirect_uri=http://www.foodanalytics.local:8082&code_challenge=POSxFwrNhqYyL2GAkyR8Xf1SWcwNKyzibAY1oPAKZuE&code_challenge_method=s256
+					
 					http://auth.algafood.local:8081/oauth/authorize?response_type=code&client_id=foodanalytics&redirect_uri=http://www.foodanalytics.local:8082&code_challenge=POSxFwrNhqYyL2GAkyR8Xf1SWcwNKyzibAY1oPAKZuE&code_challenge_method=s256
 
 					code verifier: kSZsOgyKxnEK0zsdawLFv6GsHCL6tJLKzx00vrv4NXow--JTFCIR4f0E9f8~UB8HijMNcAv0mWDOBTp4GDoiPjmZn5jk02YzPZWmeTbs6zzh45iYU70yVqxYrHbCYvym
